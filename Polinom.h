@@ -66,14 +66,14 @@ public:
      * @return - the polynomial calculated
      */
 
-    friend Polinom<T> operator*(const T x, const Polinom<T> &a) {
+    friend Polinom<T> operator*(const T x, Polinom<T> &a) {
         Polinom<T> c(a.degree);
         for (int i = 0; i <= a.degree; i++)
-            c.coef[i] = a.coef[i] * x;
+            c.coef[i] =x * a.coef[i];
         return c;
     }
 
-    friend Polinom<T> operator*(const Polinom<T> &a, const T x) {
+    friend Polinom<T> operator*(Polinom<T> &a, const T x) {
         Polinom<T> c(a.degree);
         for (int i = 0; i <= a.degree; i++)
             c.coef[i] = a.coef[i] * x;
@@ -98,7 +98,6 @@ public:
         a.coef = new T[a.degree + 1];
         for (int i = 0; i <= a.degree; i++)
             fin >> a.coef[i];
-        cout << a.degree << " " << a.coef[1] << "\n";
         return fin;
     }
 
@@ -154,7 +153,6 @@ Polinom<T>::Polinom(int n) {
     coef = new T[n + 1];
     for (int i = 0; i <= n; i++)
         coef[i] = 0;
-    std::cout << "C1" << " ";
 }
 
 template<class T>
@@ -163,7 +161,6 @@ Polinom<T>::Polinom(int n, T *array) {
     coef = new T[n + 1];
     for (int i = 0; i <= n; i++)
         coef[i] = array[i];
-    std::cout << "C2" << " ";
 }
 
 template<class T>
@@ -172,13 +169,11 @@ Polinom<T>::Polinom(Polinom<T> &obj) {
     coef = new T[degree + 1];
     for (int i = 0; i <= degree; i++)
         coef[i] = obj.coef[i];
-    std::cout << "CC" << " ";
 }
 
 template<class T>
 Polinom<T>::~Polinom() {
     delete[] coef;
-    std::cout << "D" << " ";
 }
 
 template<class T>
@@ -265,7 +260,7 @@ Polinom<T> &Polinom<T>::add(int newDegree, T newCoef) {
             Polinom<T> aux(*this);
             degree = newDegree;
             delete[] coef;
-            coef = new int[degree + 1];
+            coef = new T[degree + 1];
             for (int i = 0; i <= degree; i++)
                 coef[i] = 0;
             for (int i = 0; i <= aux.degree; i++)
@@ -285,7 +280,7 @@ Polinom<T> &Polinom<T>::remove(int newDegree) {
         coef[newDegree] = 0;
         while (!coef[degree])
             degree--;
-        coef = new int[degree + 1];
+        coef = new T[degree + 1];
         for (int i = 0; i <= degree; i++)
             coef[i] = aux.coef[i];
     }
